@@ -1,0 +1,403 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+<ul>
+  <li class="{% if gametype == 'tic-tac-toe' %}active{% endif %}">
+    <a href="{{ url_for('index', js='play', gametype='tic-tac-toe') }}" id="tic_tac_toe_nav_button">TicTacToe</a>
+  <li class="{% if gametype == 'chess' %}active{% endif %}">
+    <a href="{{ url_for('index', js='play', gametype='chess') }}" id="chess_nav_button">Chess</a>
+</ul>
+<hr>
+
+{% if gametype == 'tic-tac-toe' %}
+  {% include 'entities/tic-tac-toe.html' %}
+{% elif gametype == 'chess' %}
+  {% include 'entities/chess.html' %}
+{% endif %}
+
+<div style="text-align: center; margin-left: 3em; margin-right: 3em; font-size: 1.5em;">
+  <span id="player1" style="float: left;padding: 2px;">Player1</span> vs <span id="player2" style="float: right;padding: 2px;">Player2</span>
+</div>
+<hr>
+
+<div id="message_board" style="display: block; font-size: large;">
+  <!-- message & continue button go here-->
+  
+</div>
+
+<div id="game_join_board">
+  <div style="height: 2.4em;">
+    <span style="float:left; font-size: large;">Join PracticePlay Queue:</span> 
+    <button style="float: right; background-color: purple;" type="button" onclick="joinPracticeQueue()" >Join</button>
+  </div>
+  <hr>
+
+  <div style="grid-auto-rows: auto; text-align: center; min-height: 160px;">
+    <span style="font-size: x-large;">Available Tournaments</span>
+    
+    <div id="tournament_list_and_button" style="margin-top: 10px;display: block;">
+    <ul class="gamelist" id="tournament_list" style="display: block;">
+      <!-- <button style="float: right; background-color: purple;" type="button">Join</button> <li>{{gametype}} Tournament 4/10</li> 
+      <button style="float: right; background-color: purple;" type="button">Join</button> <li>{{gametype}} Tournament 4/10</li>
+      <button style="float: right; background-color: purple;" type="button">Join</button> <li>{{gametype}} Tournament 4/10</li>
+      <button style="float: right; background-color: purple;" type="button">Join</button> <li>{{gametype}} Tournament 4/10</li> -->
+    </ul>
+      <button style="float: right; background-color: rgb(4, 158, 50);" type="button" onclick="showOpenTournaments()">Refresh</button>
+    </div>
+
+  </div>
+  <hr>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %} 
+<script>
+  var socket;
+  var tournament_list;
+  var message_board;
+  var player1_span;
+  var player2_span;
+  var game_join_board;
+  var tournament_list_and_button;
+  var my_turn;
+  var wait_to_press_continue;
+  var is_in_tournament;
+  var waiting_for_round_to_end;
+
+  function updateNames(player1, player2) {
+    player1_span.innerText = player1
+    player2_span.innerText = player2
+  }
+
+  function ShowMessage(message, with_button = true, button_text = "Continue") {
+    message_board.display = "block"
+    wait_to_press_continue = with_button
+    if(with_button) {
+      message_board.innerHTML = '<span>' + message + '</span><button style="float: right; background-color: rgb(4, 158, 50);" type="button" onclick="gameContinueClick()">' + button_text + '</button><hr>'
+    }
+    else {
+      message_board.innerHTML = '<span>' + message + '</span><hr>'
+    }
+  }
+
+  function HideMessage() {
+    message_board.display = 'none'
+    message_board.innerHTML = ''
+  }
+
+  function updateScores(player1_id, player2_id, player1_usr, player2_usr, winner_id, gameover){
+    if(gameover){
+      if(player1_id == winner_id){
+        updateNames(player1_usr + " (Winner)", player2_usr + " (Loser)")
+      } else if(player2_id == winner_id) {
+        updateNames(player1_usr + " (Loser)", player2_usr + " (Winner)")
+      } else {
+        updateNames(player1_usr + " (Draw)", player2_usr + " (Draw)")
+      }
+    }
+  }
+
+  function UpdateWhoIsPlaying(player1_id, player2_id, who_plays_id, gameover) {
+    var color = "#7AA745"
+    if (gameover) {
+      player1_span.style.backgroundColor = "transparent"
+      player2_span.style.backgroundColor = "transparent"
+    }
+    else if (who_plays_id == getCookie("player_id")) {
+      if(who_plays_id == player1_id) {
+        player1_span.style.backgroundColor = color
+      }
+      else {
+        player2_span.style.backgroundColor = color
+      }
+    }
+    else {
+      player1_span.style.backgroundColor = "transparent"
+      player2_span.style.backgroundColor = "transparent"
+    }
+  }
+
+  function hideAvailableGames() {
+    game_join_board.style.display = 'none'
+    clearGameTournamentList()
+    tournament_list_and_button.style.display = 'none'
+  }
+
+  function showAvailableGames() {
+    if(!is_in_tournament && !wait_to_press_continue) {
+        game_join_board.style.display = 'block'
+        tournament_list_and_button.style.display = 'block'
+    }
+  }
+
+  function ShowAllGames() {
+    showAvailableGames()
+    showOpenTournaments()
+  }
+
+  function gameContinueClick(){
+    wait_to_press_continue = false
+    if (waiting_for_round_to_end){
+      ShowMessage("Waiting for current round to end...", false)
+    } 
+    else {
+      HideMessage()
+    }
+    UpdateBoardIfPlayerInGame()
+  }
+
+  function EraseGameFromMemory() {
+    setCookie('play_id', '')
+    setCookie('gametype', '')
+  }
+
+  function UpdateBoardIfPlayerInGame() {
+        if(wait_to_press_continue) { return; }
+        var request = new XMLHttpRequest();
+        request.addEventListener('load', UpdateBoardIfPlayerInGameResult);
+        request.open('GET', {{ url_for('getGameStateIfPlayerExists')|tojson }});
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        request.setRequestHeader('Authorization', 'Bearer ' + getCookie("access_token"))
+        request.send();
+  }
+  function UpdateBoardIfPlayerInGameResult() {
+    var data = JSON.parse(this.responseText);
+    if (this.status == 200) {
+      if ( data != null && (!cookieExists("gametype") || data['gametype'] == getCookie("gametype"))) {
+        processGameUpdate(data)
+      }
+    }
+    else if (this.status == 404){
+      if(waiting_for_round_to_end) {return;}
+      updateNames("Player1", "Player2")
+      ShowAllGames()
+      HideMessage()
+      resetGameBoard()
+      EraseGameFromMemory()
+      document.getElementById('game_join_board').style.visibility = 'visible'
+    }
+  }
+
+  function processGameUpdate(data) {
+      if(!cookieExists("play_id")) {
+          ShowMessage("Play started!", false)
+          hideAvailableGames()
+      }
+      is_in_tournament = data['tournament_id'] != null
+      player1_username = data['player1_username']
+      player2_username = data['player2_username']
+      gametype = data['gametype']
+      gamestate = data['gamestate']
+      setCookie("play_id", data['play_id'])
+      setCookie("gametype", data['gametype'])
+      updateNames(player1_username, player2_username)
+      updateGameBoard(gamestate)
+      hideAvailableGames()
+      updateScores(data['player1_id'], data['player2_id'], data['player1_username'], data['player2_username'], data['winner'], data['gameover'])
+      UpdateWhoIsPlaying(data['player1_id'], data['player2_id'], data['who_plays'], data['gameover'])
+      UpdateMyTurn(getCookie("player_id") == data['who_plays'])
+      if(data['gameover']) {
+        waiting_for_round_to_end = false;
+        if(data['tournament_id'] != null) {
+          if(data['isADraw']) {
+            ShowMessage("Click continue in order to play the rematch.")
+          }
+          else if(data['winner'] == getCookie("player_id")) {
+            if(data['phase'] == 1) {
+              ShowMessage("Congratulations! You have won 1st place", true, "Ok")
+              EraseGameFromMemory()
+              is_in_tournament = false;
+              ShowAllGames()
+            }
+            else if(data['phase'] == 2) {
+              ShowMessage("Congratulations! You have won 3rd place", true, "Ok")
+              EraseGameFromMemory()
+              is_in_tournament = false;
+              ShowAllGames()
+            }
+            else if (data['phase'] == 4) { //TODO: check if 1 pro-semifinal
+              ShowMessage("Press continue to play for 1st or 2nd place.")
+              waiting_for_round_to_end = true
+            }
+            else {
+              ShowMessage("Next game will start when all games in this round are finished.")
+              waiting_for_round_to_end = true
+            }
+          }
+          else { //if loser
+            if(data['phase'] == 1) {
+              ShowMessage("Congratulations! You have won 2nd place", true, "Ok")
+              EraseGameFromMemory()
+              is_in_tournament = false;
+              ShowAllGames()
+            }
+            else if(data['phase'] == 2) {
+              ShowMessage("Congratulations! You have won 4th place", true, "Ok")
+              EraseGameFromMemory()
+              is_in_tournament = false;
+              ShowAllGames()
+            }
+            else if (data['phase'] == 4) { //TODO: check if 1 pro-semifinal
+              ShowMessage("Press continue to play for 3rd or 4th place.")
+              waiting_for_round_to_end = true
+            }
+            else {
+              ShowMessage("You are out of the tournament.", true, "Ok")
+              EraseGameFromMemory()
+              is_in_tournament = false;
+              ShowAllGames()
+            }
+          }
+        }
+        else { // not a tournament
+          if(data['isADraw']) {
+            ShowMessage("Draw!", true, "Ok")
+            EraseGameFromMemory()
+          }
+          else if (data['winner'] == getCookie('player_id')){
+            ShowMessage("You win!", true, "Ok")
+            EraseGameFromMemory()
+          }
+          else {
+            ShowMessage("You lose!", true, "Ok")
+          }
+        }
+        EraseGameFromMemory()
+      }
+  }
+
+  function run_play_block_script(){
+    tournament_list = document.getElementById('tournament_list')
+    message_board = document.getElementById('message_board');
+    player1_span = document.getElementById('player1')
+    player2_span = document.getElementById('player2')
+    game_join_board = document.getElementById('game_join_board')
+    tournament_list_and_button = document.getElementById('tournament_list_and_button')
+    my_turn = false;
+    is_in_tournament = false;
+    waiting_for_round_to_end = false;
+    HideMessage()
+
+    UpdateBoardIfPlayerInGame()
+    if( !cookieExists("play_id")){
+      ShowAllGames()
+    }
+     else {
+       clearGameTournamentList()
+       hideAvailableGames()
+     }
+
+    socket = io.connect('{{ url_for('index', _external=True) }}', function(socket) {
+      socket.emit('spectate' , getCookie('access_token'))
+    });
+    socket.on('spectate_' + getCookie('player_id'), function(res) {
+        if(!cookieExists("gametype") || res['gametype'] == getCookie("gametype")) {
+          if(!wait_to_press_continue){
+            processGameUpdate(res)
+          }
+        }
+    });
+      
+
+    {% if gametype == 'tic-tac-toe' %}
+      run_tic_tac_toe_script();
+    {% elif gametype == 'chess' %}
+      run_chess_script();
+    {% endif %}
+
+  }
+
+  function joinPracticeQueue() {
+        var request = new XMLHttpRequest();
+        request.addEventListener('load', processJoinGameResult);
+        request.open('POST', {{ url_for('join_game')|tojson }});
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        request.setRequestHeader('Authorization', 'Bearer ' + getCookie("access_token"))
+        ShowMessage("Waiting for an opponent...", false)
+        request.send(JSON.stringify({'gametype': '{{ gametype }}' }));
+  }
+  function processJoinGameResult(){
+    if (this.status == 200) {
+      var data = JSON.parse(this.responseText);
+      hideAvailableGames()
+      clearGameTournamentList()
+    }
+    else {
+      HideMessage()
+    }
+  }
+
+  function addElementToTournamentList(tournament_id, gametype, people_joined, max_players) {
+    tournament_list.innerHTML += '<div style="margin-bottom: 5px;"><button onclick="joinTournament(' + tournament_id + ')" style="float: right; background-color: purple;" type="button">Join</button> <li>' + gametype + ' Tournament ' + String(people_joined) + '/' + String(max_players) + '</li><div>'
+  }
+
+  function clearGameTournamentList() {
+    tournament_list.innerHTML = ""
+  }
+
+  function joinTournament(tournament_id) {
+    var request = new XMLHttpRequest();
+    request.addEventListener('load', processJoinTournamentResult);
+    request.open('POST', {{ url_for('join_open_tournament')|tojson }});
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    request.setRequestHeader('Authorization', 'Bearer ' + getCookie("access_token"))
+    ShowMessage("Waiting for tournament to start...", false)
+    request.send(JSON.stringify({'tournament_id': tournament_id }));
+  }
+  function processJoinTournamentResult() {
+    if (this.status == 200) {
+      var data = JSON.parse(this.responseText);
+      hideAvailableGames()
+      clearGameTournamentList()
+      is_in_tournament = true;
+    }
+    else {
+      HideMessage()
+    }
+  }
+
+  function showOpenTournaments() {
+    if(is_in_tournament ) {return;}
+    var request = new XMLHttpRequest();
+    request.addEventListener('load', processShowOpenTournamentsResult);
+    {% if gametype == 'tic-tac-toe' %}
+      request.open('GET', {{ url_for('get_open_tournaments', gametype='tic_tac_toe')|tojson }});
+    {% elif gametype == 'chess' %}
+      request.open('GET', {{ url_for('get_open_tournaments', gametype='chess')|tojson }});
+    {% endif %}
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    request.setRequestHeader('Authorization', 'Bearer ' + getCookie("access_token"))
+    request.send();
+  }
+  function processShowOpenTournamentsResult(){
+    if (this.status == 200) {
+      var data = JSON.parse(this.responseText);
+      tournaments_list = data['tournaments']
+      clearGameTournamentList()
+      for(i = 0; i < tournaments_list.length; i++) {
+        addElementToTournamentList(tournaments_list[i]['id'], tournaments_list[i]['gametype'], tournaments_list[i]['registered_players_count'], tournaments_list[i]['participants_num'])
+      }
+    }
+    else {
+      clearGameTournamentList()
+    }
+  }
+
+
+    
+
+    
+
+  
+
+  
+
+</script>
+{% endblock %}

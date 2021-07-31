@@ -1,0 +1,126 @@
+.gamelist {
+display: block;
+}
+
+.gamelist li{
+text-align: left;
+}
+
+td a,
+td a:link,
+td a:visited,
+td a:hover,
+td a:active{
+    text-decoration: none !important;
+}
+
+.scores {
+    display: block;
+}
+    
+.scores li{
+text-align: left;
+}
+
+#chess_div {
+    width: 100%;
+    height: 520px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.contentPane {
+    width: 500px;
+    height: 500px;
+    margin: auto;
+}
+
+.contentPane table{
+    width: 100%;
+    height: 100%;
+}
+
+#chess_board {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+#chess_board li {
+	color:#000;
+	display:block;
+	font-size:60px;
+	height:100%;
+	position:relative;
+	text-decoration:none;
+	text-shadow:0 1px #fff;
+	width:100%;
+	background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+    margin: 0px !important;
+}
+#chess_board { border:5px solid #333; }
+#chess_board td {
+	background:#fff;
+	background:-moz-linear-gradient(top, #fff, #eee);
+	background:-webkit-gradient(linear,0 0, 0 100%, from(#fff), to(#eee));
+	box-shadow:inset 0 0 0 1px #fff;
+	-moz-box-shadow:inset 0 0 0 1px #fff;
+	-webkit-box-shadow:inset 0 0 0 1px #fff;
+	height:40px;
+	text-align:center;
+	vertical-align:middle;
+	width:40px;
+}
+#chess_board tr:nth-child(odd) td:nth-child(even),
+#chess_board tr:nth-child(even) td:nth-child(odd) {
+	background:#ccc;
+	background:-moz-linear-gradient(top, #ccc, #eee);
+	background:-webkit-gradient(linear,0 0, 0 100%, from(#ccc), to(#eee));
+	box-shadow:inset 0 0 10px rgba(0,0,0,.4);
+	-moz-box-shadow:inset 0 0 10px rgba(0,0,0,.4);
+	-webkit-box-shadow:inset 0 0 10px rgba(0,0,0,.4);
+}
+
+
+
+
+
+
+[class="R"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/white_rook.png?raw=true);
+    
+}
+[class="H"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/white_knight.png?raw=true);
+}
+[class="B"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/white_bishop.png?raw=true);
+}
+[class="Q"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/white_queen.png?raw=true);
+}
+[class="K"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/white_king.png?raw=true);
+}
+[class="P"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/white_pawn.png?raw=true);
+}
+[class="r"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/black_rook.png?raw=true);
+}
+[class="h"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/black_knight.png?raw=true);
+}
+[class="b"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/black_bishop.png?raw=true);
+}
+[class="q"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/black_queen.png?raw=true);
+}
+[class="k"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/black_king.png?raw=true);
+}
+[class="p"] {
+    background-image: url(https://github.com/gre/chess-game/blob/master/android/assets/images/black_pawn.png?raw=true);
+}

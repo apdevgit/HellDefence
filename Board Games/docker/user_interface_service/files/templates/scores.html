@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+<ul>
+  <li class="{% if score_show == 'practice' %}active{% endif %}">
+    <a href="{{ url_for('index', js='scores', score_show='practice') }}" id="practice_nav_button">Practice</a>
+  <li class="{% if score_show == 'tournament' %}active{% endif %}">
+    <a href="{{ url_for('index', js='scores', score_show='tournament') }} " id="tournament_nav_button">Tournament</a>
+</ul>
+<hr>
+
+
+<div style="text-align: center; margin-left: 3em; margin-right: 3em; font-size: 1.3em;text-align: center;">
+  {% for score in total_score(username, score_show) %}
+    <span>Your {{score_show}} total Score: {{ score['wins'] }} Wins / {{ score['loses'] }} Loses / {{ score['draws'] }} Draws </span>
+  {% endfor %}
+</div>
+<hr>
+
+  <div style="margin-top: 10px;text-align: center;">
+    Your {{score_show}} plays:
+    <ul class="scores">
+      {% for score_dict in play_scores(username, score_show)%}
+        {% if score_dict['place'] | int >= 1 and score_dict['place'] | int <= 4%}
+          <li style="display: flexbox;"><span style="font-size: 1.6em;">{{score_dict['player1']}}</span> vs <span style="font-size: 1.6em;margin-right: 35px;">{{score_dict['player2']}}</span> <span style="font-size: 1.6em;">{{score_dict['result']}} #{{score_dict['place']}} </span> (Game: {{score_dict['gametype']}}) </li>
+        {% else %}
+          <li style="display: flexbox;"><span style="font-size: 1.6em;">{{score_dict['player1']}}</span> vs <span style="font-size: 1.6em;margin-right: 35px;">{{score_dict['player2']}}</span> <span style="font-size: 1.6em;">{{score_dict['result']}}</span> (Game: {{score_dict['gametype']}}) </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    </div>
+    <hr>
+
+    <div style="font-size: 1.5em;">
+
+
+      <form id="search_form" action="" style="height: 40px;">
+        <label for="fname" style="padding: 0px; margin: 0px;">Search User:</label>
+        <input type="text" id="player_search" style="padding: 0px; width: 180px;height: 65%; float:right;background-color:whitesmoke;margin: auto;font-size: 55%;"><br><br>
+        <input id="sendbutton" type="submit" value="Search" style="padding: 0px;float:right;font-size: 0.8em;padding-right: 4px;padding-left: 4px;margin: auto;">
+      </form>
+
+
+    </div>
+    <hr>
+
+    <div style="text-align: center; margin-left: 3em; margin-right: 3em; font-size: 1.3em;text-align: center;">
+      <span id="player_search_total_score"></span>
+    </div>
+    
+
+  {% if score_show == 'tournament' %}
+  <hr>
+  <div style="margin-top: 10px;text-align: center;">
+    <span id="search_tour_plays_intro"></span>
+    <ul class="scores" id="player_search_play_scores">
+        <!-- search player tournament plays go here -->
+    </ul>
+    </div>
+  {% endif %}
+
+</div>
+<hr>
+{% endblock %}
+
+
+
+
+
+{% block script %}
+
+<script type="text/javascript">
+  function run_scores_block_scipt() {
+
+    $("#search_form").submit(function(e) {
+      e.preventDefault();
+    });
+
+    var socket = io.connect('{{ url_for('index', _external=True) }}');
+  
+    
+    {% if score_show == 'practice' %}
+
+      socket.on('get_total_score_io', function(res) {
+        if (res[0] == "success") {
+          data_dict = res[1]
+          $("#player_search_total_score").html('<span>' +  data_dict['username'] + '\'s total Score: ' + data_dict['wins'] + ' Wins / ' + data_dict['loses'] + ' Loses / ' + data_dict['draws'] + ' Draws </span>');
+        } 
+		else
+		{
+			$('#player_search_total_score').html('No practice game records for this username')
+		}
+      });
+
+      $('#sendbutton').on('click', function() {
+        socket.emit('get_total_score_io', $('#player_search').val(), "{{score_show}}");
+      });
+
+    {% elif score_show == 'tournament' %}
+
+      socket.on('get_total_score_io', function(res) {
+        if (res[0] == "success") {
+          data_dict = res[1]
+          $("#player_search_total_score").html('<span>' +  data_dict['username'] + '\'s total Score: ' + data_dict['wins'] + ' Wins / ' + data_dict['loses'] + ' Loses / ' + data_dict['draws'] + ' Draws </span>');
+        } 
+      });
+
+      socket.on('get_play_scores_io', function(res) {
+	   $('#player_search_play_scores').text('')
+        if (res[0] == "success" && res[1].length > 0) {
+          data_dict_list = res[1]
+          $('#search_tour_plays_intro').text(data_dict_list[0]['player1'] + '\' tournament plays:')
+          for (i = 0; i < data_dict_list.length; i++) {
+            place = data_dict_list[i]['place']
+            if ( place >= 1 && place <= 4) {
+              place = '#' + String(data_dict_list[i]['place'])
+            }
+            else {
+              place = ''
+            }
+            $("#player_search_play_scores").append('<li style="display: flexbox;"><span style="font-size: 1.6em;">' + data_dict_list[i]['player1'] + '</span> vs <span style="font-size: 1.6em;margin-right: 35px;">' + data_dict_list[i]['player2'] + '</span> <span style="font-size: 1.6em;">' + data_dict_list[i]['result'] + ' ' + place + '</span>(Game: ' + data_dict_list[i]['gametype'] + ') </li>')
+          }
+        } 
+		else
+		{
+			$('#player_search_total_score').text('No tournament game records for this username')
+			$('#search_tour_plays_intro').text('')
+		}
+      });
+
+      $('#sendbutton').on('click', function() {
+        socket.emit('get_total_score_io', $('#player_search').val(), "{{score_show}}");
+        socket.emit('get_play_scores_io', $('#player_search').val(), "{{score_show}}");
+      });
+
+      
+
+    {% endif %}
+
+
+  };
+  </script>
+{% endblock %}

@@ -1,0 +1,120 @@
+
+
+<div class="text-center"id="box">
+  <ul id="gameBoard">
+  <li class="tic"id="0" {% if js == 'play' %} onclick="square_click(0); {% endif %}"></li>
+  <li class="tic"id="1" {% if js == 'play' %} onclick="square_click(1); {% endif %}"></li>
+  <li class="tic"id="2" {% if js == 'play' %} onclick="square_click(2); {% endif %}"></li>
+  <li class="tic"id="3" {% if js == 'play' %} onclick="square_click(3); {% endif %}"></li>
+  <li class="tic"id="4" {% if js == 'play' %} onclick="square_click(4); {% endif %}"></li>
+  <li class="tic"id="5" {% if js == 'play' %} onclick="square_click(5); {% endif %}"></li>
+  <li class="tic"id="6" {% if js == 'play' %} onclick="square_click(6); {% endif %}"></li>
+  <li class="tic"id="7" {% if js == 'play' %} onclick="square_click(7); {% endif %}"></li>
+  <li class="tic"id="8" {% if js == 'play' %} onclick="square_click(8); {% endif %}"></li>
+  </ul>
+</div>
+
+
+
+
+
+<script>
+
+  var dataToSquareMark = {0: '', 1: 'X', 10:'O'}
+  var myTurn;
+
+  function UpdateMyTurn(status) {
+      myTurn = status
+  }
+
+  function updateGameBoard(board) {
+    for(i=0; i < 9; i++){
+      document.getElementById(String(i)).innerText = dataToSquareMark[board[i]]
+    }
+  }
+
+  function resetGameBoard() {
+    updateGameBoard([0, 0, 0, 0, 0, 0, 0, 0, 0])
+  }
+
+  function run_tic_tac_toe_script() {
+  }
+    
+  function square_click(square_index) {
+    if(!myTurn) { return; }
+    if (document.getElementById(String(square_index)).textContent == "") {
+      if (cookieExists('play_id') && getCookie("gametype") == "tic-tac-toe"){
+        var request = new XMLHttpRequest();
+        request.addEventListener('load', processResult);
+        request.open('POST', {{ url_for('play_tictactoe_move')|tojson }});
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        request.setRequestHeader('Authorization', 'Bearer ' + getCookie("access_token"))
+        request.send(JSON.stringify({'square_to_play': square_index, 'play_id': getCookie('play_id')}));
+      }
+    }
+  }
+
+  function processResult(){
+    ;
+  }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+#box{
+  width: 380px;
+  height: 380px;
+  overflow: auto;
+  margin: 40px auto;
+  background: #666;
+  border-radius: 10px;
+}
+
+#gameBoard {
+  width: auto;
+  height: auto;
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#gameBoard li{
+  float: left;
+  margin: 10px;
+  height: 100px;
+  width: 100px;
+  font-size: 60px;
+  background: #333;
+  color: #ccc;
+  list-style: none;
+  text-align: center;
+  border-radius: 5px;
+}
+
+#gameBoard li:hover {
+  cursor: pointer;
+  background: #000;
+}
+
+.o{
+  color: green !important;
+}
+
+.x{
+  color: red !important;
+}
+
+</style>
+
+

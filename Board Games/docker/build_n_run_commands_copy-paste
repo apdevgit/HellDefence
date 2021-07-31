@@ -1,0 +1,15 @@
+<BUILD>
+sudo docker build -t="user_interface" user_interface_service/.;
+sudo docker build -t="authentication" authentication_service/.;
+sudo docker build -t="game_master" game_master_service/.;
+sudo docker build -t="play_master" play_master_service/.;
+sudo docker build -t="database" database/.;
+sudo docker build -t="zookeeper" zookeeper/.;
+
+<RUN>
+sudo docker run -ti --rm --network="board_games_network" -p 5000:5000 user_interface;                         #expose to local port <p>,  <p>:5000
+sudo docker run -ti --rm --network="board_games_network" authentication;
+sudo docker run -ti --rm --network="board_games_network" game_master;
+sudo docker run -ti --rm --network="board_games_network" play_master;
+sudo docker run -ti --rm --network="board_games_network" -p 4001:5432 --name="database" database;             #mount: /var/lib/postgresql/data for data saving
+sudo docker run -ti --rm --network="board_games_network" -p 4000:2181 --name="zookeeper" zookeeper;

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+<div style="text-align: center; margin-left: 3em; margin-right: 3em; font-size: 1.5em;">
+    <span>Create Tournament</span>
+  </div>
+  <hr>
+
+
+    <div style="font-size: 1em; height: 50px;margin-top: 20px;display: flex;">
+  
+          <label for="gametype_label" style="margin-right: 12px;font-size: 120%;margin-bottom: 10px;">Gametype:</label>
+          <select id="gametype_input" name="gametype_list" style="margin-right: 38px;height: 35px;">
+            <option value="tic-tac-toe">Tic-tac-toe</option>
+            <option value="chess">Chess</option>
+          </select>
+
+          <label for="participants_num_label" style="margin-right: 12px;font-size: 110%;margin-bottom: 10px">Number of participants:</label>
+          <select id="participants_num_input" name="participants_num_list" style="margin-right: 46px;height: 35px;">
+            <option value="4">4</option>
+            <option value="8">8</option>
+            <option value="16">16</option>
+            <option value="32">32</option>
+            <option value="64">64</option>
+          </select>
+          <input type="submit" value="Create" onclick="onCreateTournament();" style="height:35px; margin: 0px;font-size: 80%; border-radius: 2px; border-color: black;">
+          <div id="form_message"></div>
+    </div>
+
+
+</div>
+<hr>
+{% endblock %}
+
+
+{% block script %}
+<script>
+  var gametype_input;
+  var participants_num_input;
+  var form_message;
+  
+  function run_create_tournament_block_scipt() {
+    gametype_input = document.getElementById('gametype_input');
+    participants_num_input = document.getElementById('participants_num_input');
+    form_message = document.getElementById('form_message');
+  }
+  
+  function onCreateTournament() {
+    var request = new XMLHttpRequest();
+    request.addEventListener('load', processCreateTournamentResult);
+    request.open('POST', {{ url_for('create_open_tournament')|tojson }});
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.setRequestHeader('Authorization', 'Bearer ' + getCookie("access_token"))
+    request.send(JSON.stringify({'gametype': gametype_input.value, 'participants_num': participants_num_input.value}));
+  }
+  function processCreateTournamentResult() {
+    var data = JSON.parse(this.responseText);
+    if (this.status == 201) {
+      form_message.innerText = "Tournament is created successfully";
+    }
+    else if (this.status == 400){
+      form_message.innerText = data[Object.keys(data)[0]]
+    }
+  }
+
+
+  </script>
+{% endblock %}
