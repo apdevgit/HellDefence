@@ -1,5 +1,5 @@
 # HellDefence Unity3D Game
-HellDefence is a game that I developed using Unity3D game-engine for my graduation thesis project, during my studies in the Technological Educational Institute of Crete, Department of Informatics Engineering.
+HellDefence is an action game that I developed using Unity3D game-engine for my graduation thesis project, during my studies in the Technological Educational Institute of Crete, Department of Informatics Engineering. The purpose of the game is to defeat all the upcoming 'waves' of enemies. Each wave comes after the elimination of the previous one. The player can achieve that using four basic spells. Additionally, there are other special spells that the player can find on the 'buffstands' as well as stat boosts and full healing.
 
 #### Youtube Game Demonstration and gameplay:
 - Demonstration video: (pending)
@@ -12,5 +12,30 @@ HellDefence is a game that I developed using Unity3D game-engine for my graduati
 #### Repository
 This github repository contains only the project scripts that were developed in the unity3d project. You can download the whole project source from the onedrive link above. Inside the "Scripts" repository folder you can find a brief explanation of the utility of every script.
 
-## More Details
-(pending)
+# Other Details
+#### Enemy Models:
+- Skeleton
+- Spider
+- Goblin
+- Golem
+- Werewolf
+- LavaGolem
+- LavaCreature
+- ElfArcher
+
+#### Spells
+- Fireball
+- Teleport
+- BulletStorm
+- PlasmaShield
+- Lavabeam
+- Gravity
+- GroundShock
+- Domestication
+
+#### Stats
+- Damage
+- Speed
+- Cooldown
+- Regeneration
+- Maximum HP
