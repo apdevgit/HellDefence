@@ -1,0 +1,70 @@
+[MODELS]
+ElfArcher                 http://opengameart.org/content/elf-game-ready-and-animated
+Goblin                    https://www.assetstore.unity3d.com/en/#!/content/12131
+Golem                     https://www.assetstore.unity3d.com/en/#!/content/33260
+LavaGolem                 http://opengameart.org/content/fireicestone-golem
+LavaCreature              http://opengameart.org/content/lava-spawn-animated
+Skeleton                  https://www.assetstore.unity3d.com/en/#!/content/30659
+Spider                    https://www.assetstore.unity3d.com/en/#!/content/11869
+Werewolf                  http://opengameart.org/content/warwolf
+Barrels                   https://www.assetstore.unity3d.com/en/#!/content/591
+Trees                     https://www.assetstore.unity3d.com/en/#!/content/54724
+Gate rocks                https://www.assetstore.unity3d.com/en/#!/content/6947
+Fence rocks               https://www.assetstore.unity3d.com/en/#!/content/71569
+Treasure chest            https://www.assetstore.unity3d.com/en/#!/content/72498
+Werewolf dagger           https://www.assetstore.unity3d.com/en/#!/content/17203
+Skeleton sword            https://www.assetstore.unity3d.com/en/#!/content/17203
+Menu Skybox               https://www.assetstore.unity3d.com/en/#!/content/25117
+Arrow                     http://opengameart.org/content/crossbow-1
+Portal Particle           https://www.assetstore.unity3d.com/en/#!/content/72399
+BulletStorm Particle      https://www.assetstore.unity3d.com/en/#!/content/72399
+PlasmaShield Particle     https://www.assetstore.unity3d.com/en/#!/content/72399
+GroundShock particle      https://www.assetstore.unity3d.com/en/#!/content/72399
+Domestication particle    https://www.assetstore.unity3d.com/en/#!/content/68246
+Buff particle             https://www.assetstore.unity3d.com/en/#!/content/68246
+
+[SOUNDS]
+Gravity                   http://freesound.org/people/shinshi/sounds/192192/
+BulletStorm               https://www.freesound.org/people/klangfabrik/sounds/232936/
+PlasmaField               https://www.freesound.org/people/Apenguin73/sounds/351812/
+Hit Sound                 https://www.freesound.org/people/moca/sounds/49040/
+GroundShock               https://www.freesound.org/people/bareform/sounds/218721/
+Teleport                  http://freesound.org/people/FlechaBr/sounds/340159/
+Golem Death               https://www.freesound.org/people/Bernuy/sounds/268506/
+LavaGolem Death           https://www.freesound.org/people/Kirat/sounds/158687/
+LavaCreature Death        https://www.freesound.org/people/malexmedia/sounds/31811/
+ElfArcher Death           https://www.freesound.org/people/11linda/sounds/168815/
+Werewolf Death            https://www.freesound.org/people/SkinnySoundGuy/sounds/172004/
+Goblin Death              https://www.freesound.org/people/spookymodem/sounds/202100/
+Skeleton Death            https://www.freesound.org/people/Deganoth/sounds/348698/
+Spider Death              https://www.freesound.org/people/DrMinky/sounds/174436/
+Merlin Death              https://www.freesound.org/people/ecfike/sounds/154554/
+Orc Death                 https://www.freesound.org/people/Timbre/sounds/86242/
+Golem Attack1             https://www.freesound.org/people/Bernuy/sounds/268506/
+Golem Attack2             https://www.freesound.org/people/Bernuy/sounds/268506/
+Werewolf Attack1          https://www.freesound.org/people/Smullen93/sounds/340333/
+Werewolf Attack2          https://www.freesound.org/people/Smullen93/sounds/340333/
+Werewolf Attack3          https://www.freesound.org/people/Smullen93/sounds/340333/
+Goblin Attack1            https://www.freesound.org/people/-sihiL/sounds/213846/
+Goblin Attack2            https://www.freesound.org/people/-sihiL/sounds/213846/
+Goblin Attack3            https://www.freesound.org/people/-sihiL/sounds/213846/
+Skeleton Attack           https://www.freesound.org/people/qubodup/sounds/184422/
+Spider Attack1            https://www.freesound.org/people/Timbre/sounds/100905/
+Spider Attack2            https://www.freesound.org/people/Timbre/sounds/100905/
+Spider Attack3            https://www.freesound.org/people/Timbre/sounds/100905/
+Menu Click                https://www.freesound.org/people/medetix/sounds/177912/
+Lavabeam                  https://www.freesound.org/people/Apenguin73/sounds/351812/
+Fireball Boom             http://freesound.org/people/Werra/sounds/244394/
+Fireball Cast             http://freesound.org/people/LiamG_SFX/sounds/334237/
+Win Music                 https://www.freesound.org/people/M-RED/sounds/52908/
+Menu Music                http://www.freesfx.co.uk/download/?type=mp3&id=17658
+Buff Picked               https://www.freesound.org/people/renatalmar/sounds/264981/
+Heal                      https://www.freesound.org/people/Timbre/sounds/221683/
+
+[IMAGES/TEXTURES]
+Spell Icons               http://game-icons.net
+LavaBeamTexture           https://mysteriousdove.deviantart.com/art/Lava-Texture-2560-x-1440-498672313
+Gravity Image             https://naruttebayo67.deviantart.com/art/ki-ball-electric-v2-327138855
+Fireball Particle         https://naruttebayo67.deviantart.com/art/Fire-Ball1-423341140
+
+
