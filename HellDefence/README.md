@@ -1,7 +1,7 @@
 # HellDefence Unity3D Game (2017)
 HellDefence is an action game that I developed using Unity3D game-engine for my graduation thesis project, during my studies in the Technological Educational Institute of Crete, Department of Informatics Engineering. The purpose of the game is to defeat all the upcoming 'waves' of enemies. Each wave comes after the elimination of the previous one. The player can achieve that using four basic spells. Additionally, there are other special spells that the player can find on the 'buffstands' as well as stat boosts and full healing.
 
-The 3D models, sounds, images and textures were not created by me and their source is provided in the Assets Links file.
+The 3D models, sounds, images and textures were not created by me and their source is provided in the Asset Links file.
 
 #### Youtube Game Demonstration and gameplay:
 - Demonstration video: https://youtu.be/ta-EybHZYg0
