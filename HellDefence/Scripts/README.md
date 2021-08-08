@@ -25,19 +25,19 @@ These scripts contain definitions of different enum types that are used: Mob, Pl
 ## Spells
 The scripts in this folder implement the functionality of every spell in the game.
 ## UI
-- <ins>HealthBar.cs</ins>: 
+- <ins>HealthBar.cs</ins>: Provides the functionality (color change, health bar offset) of the health bar that is located over every living entity.
 - <ins>PlayerHealthBar.cs</ins>: This script manages the color and the movement of the bar representing the player current health points on the top left side of the screen.
 - <ins>SpellBar.cs</ins>: Manages the player spell bar. 
 - <ins>SpellButtonBehaviour.cs</ins>: Represents the icon of a spell that is placed in the player SpellBar, providing information about the spell cooldown.
 - <ins>StatField.cs</ins>: Represents the stat entity, providing information about the stat that can be visualized on the StatsPanel, such as the remaining time the stat type.
 - <ins>StatsPanel.cs</ins>: Manages to show the list of the stats that the player has acquired.
 ## Other
-- <ins>Billboard.cs</ins>: 
-- <ins>BuffStand.cs</ins>: 
-- <ins>CameraMovement.cs</ins>: 
-- <ins>DamageDealtBillboard.cs</ins>: 
-- <ins>GameController.cs</ins>: 
-- <ins>GameDictionary.cs</ins>: 
-- <ins>PlayersNumber.cs</ins>: 
-- <ins>RigidbodyWrapper.cs</ins>: 
-- <ins>Stats.cs</ins>: 
+- <ins>Billboard.cs</ins>: Makes the attached UI element look at direction perpendicular to the camera local-x axis. It is used on living entities health bars.
+- <ins>BuffStand.cs</ins>: Implements the functionality of buff areas, that is the areas that can give the player a specific buff when he/she reaches them. It also keeps information about the probability of giving any specific buff type (spell, stat, full heal) as well as the probability of giving anything at all.
+- <ins>CameraMovement.cs</ins>: Manages the camera movement as the player moves during the game. It also supports camera for two players and camera transition from Two players to One player when either one of the players is defeated.
+- <ins>DamageDealtBillboard.cs</ins>: Creates a short animation showing a number moving upwards, representing the number of health points lost during an attack.
+- <ins>GameController.cs</ins>: Manages the core functionality of the game. That is, loading and instantiating the enemies for each wave, keeping track of the enemies that were defeated, activating the Buff Areas at the beggining of each wave and also react to player win or defeat.
+- <ins>GameDictionary.cs</ins>: It keeps data about spell and stat properties and it also provides key to value pairs that make the use of specific information to other scripts easier.
+- <ins>PlayersNumber.cs</ins>: Keeps information of the game mode (1 Player or 2 Players)
+- <ins>RigidbodyWrapper.cs</ins>: This script is responsible for the player movement and physics. Its main purpose is to make the player movement be affected by two parameters. First, the constant speed with which the player is moving, in addition to the speed derived from the external forces (enemy attacks). External forces are decreaced overtime under the influence of the friction.
+- <ins>Stats.cs</ins>: A Class that represents a stat, its type and the category in which it belongs.
