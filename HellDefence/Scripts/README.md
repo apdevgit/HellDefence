@@ -17,31 +17,20 @@ These scripts contain definitions of different enum types that are used: Mob, Pl
 - <ins>ThrowingObject.cs</ins>: This script is attached as a component to an object that was initiated from the Throw.cs script and is responsible to check for collisions, that is if it has hit an enemy or a wall. In that case, is changes the enemy damage accordingly and destroys itself. It also destroys itself if there is not any collision and a certain amount of time has passed.
 ## Player
 - <ins>PlayerAnimation.cs</ins>: The 'middleware' between the player scripts and the Unity Animator Controller, in order to make the animation transitions correctly, based on the player actions.
-- <ins>PlayerAudio.cs</ins>: A simple script that helps on playing sound clips, using the AudioSource attached to the object Transform.
+- <ins>PlayerAudio.cs</ins>: A simple script that helps with playing sound clips, using the AudioSource attached to the object Transform.
 - <ins>PlayerController.cs</ins>: Manages the player input and the player's core functionality, making use of other helpful player components/scripts such as PlayerAnimation, PlayerSpell and PlayerCooldown.
 - <ins>PlayerCooldown.cs</ins>: Keeps track of the player spell cooldowns. In this way, it provides the information of whether a spell can be casted and also how much time is left untill the spell is ready.
 - <ins>PlayerSpell.cs</ins>: Manages the spell casting system and the corresponding player movement during the casting of a spell.
 - <ins>Stats.cs</ins>: Keeps track of the initial stats of the player (speed, damage, cooldown etc) and is also responsible of updating and calculating the total values of the player stats after receiving extra stats from the Buff Areas.
 ## Spells
-- <ins>BulletStorm.cs</ins>: 
-- <ins>Domestication.cs</ins>: 
-- <ins>Fireball.cs</ins>: 
-- <ins>Gravity.cs</ins>: 
-- <ins>GroundShock.cs</ins>: 
-- <ins>GroundShockTrigger.cs</ins>: 
-- <ins>LavaBeam.cs</ins>: 
-- <ins>MobGroundShock.cs</ins>: 
-- <ins>MobLavaBeam.cs</ins>: 
-- <ins>PlasmaField.cs</ins>: 
-- <ins>Spell.cs</ins>: 
-- <ins>Teleport.cs</ins>: 
+The scripts in this folder implement the functionality of every spell in the game.
 ## UI
 - <ins>HealthBar.cs</ins>: 
-- <ins>PlayerHealthBar.cs</ins>: 
-- <ins>SpellBar.cs</ins>: 
-- <ins>SpellButtonBehaviour.cs</ins>: 
-- <ins>StatField.cs</ins>: 
-- <ins>StatsPanel.cs</ins>: 
+- <ins>PlayerHealthBar.cs</ins>: This script manages the color and the movement of the bar representing the player current health points on the top left side of the screen.
+- <ins>SpellBar.cs</ins>: Manages the player spell bar. 
+- <ins>SpellButtonBehaviour.cs</ins>: Represents the icon of a spell that is placed in the player SpellBar, providing information about the spell cooldown.
+- <ins>StatField.cs</ins>: Represents the stat entity, providing information about the stat that can be visualized on the StatsPanel, such as the remaining time the stat type.
+- <ins>StatsPanel.cs</ins>: Manages to show the list of the stats that the player has acquired.
 ## Other
 - <ins>Billboard.cs</ins>: 
 - <ins>BuffStand.cs</ins>: 
