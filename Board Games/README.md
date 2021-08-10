@@ -13,6 +13,6 @@ In this project, a distributed system has been developed with the purpose of hos
 - <ins>Zookeeper</ins>: Makes possible the service discovery and PlayMaster crash recovery.
 
 ## User Account Roles
-- <ins>Player</ins>: A player is an authorized user that join practice or tournament games as well as spectate other ongoing games.
+- <ins>Player</ins>: A player is an authorized user that can join practice or tournament games as well as spectate other ongoing games.
 - <ins>Offical</ins>: Apart from joining and spectating games, an Official can create tournaments.
 - <ins>Admin</ins>: Apart from joining and spectating games, an Admin can create other accounts while he can specify their role.
