@@ -8,7 +8,7 @@ In this project, a distributed system has been developed with the purpose of hos
 - <ins>User Interface</ins>: Provides the user interface and it is the only service that receives requests from the user directly through the browser.
 - <ins>Authentication</ins>: Responsible for maintaining the user authentication information in addition to the role of the user.
 - <ins>GameMaster</ins>: Responsible for keeping the player scores, for pairing players for practice plays and for creating and managing tournaments.
-- <ins>PlayMaster</ins>: 
+- <ins>PlayMaster</ins>: This service is responsible for managing individual plays. When a play is created by the GameMaster, the GameMaster Service assigns it on an available PlayMaster. Additinally, it saves the current game state on the Zookeeper Server. This way if a PlayMaster crashes, the new PlayMaster can take responsibility for those games that are not under anyone's supervision.
 - <ins>Database</ins>: The database in which the user account and game information is saved. It receives information from Authentication Service and GameMaster Service.
 - <ins>Zookeeper</ins>: Makes possible the service discovery and PlayMaster crash recovery.
 
