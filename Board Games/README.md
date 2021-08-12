@@ -1,7 +1,8 @@
 # Board Games (2020)
 In this project, a distributed system has been developed using Docker microservices and a RESTful API with the purpose of hosting and managing board games on a site, as a Semester Project for the Distributed Systems course during my Master's studies. More specifically, the users can play tic-tac-toe or chess against each other, in practice matches or in tournaments. Their scores are saved in the database and they are able to search and see their scores or other players' scores. There is also the ability to spectate ongoing matches. In case the service that is responsible for managing each match (PlayMaster Service) crashes, another PlayMaster can start and keep the matches progressing thanks to a system crash recovery implementation.
 
-- Demonstration video: https://youtu.be/c3SFfVAdBNY
+#### Demonstration video: 
+Youtube link: https://youtu.be/c3SFfVAdBNY
 
 ## Frameworks/Tools
 - Docker
