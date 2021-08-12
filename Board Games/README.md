@@ -20,7 +20,7 @@ In this project, a distributed system has been developed using Docker microservi
 - XMLHttpRequest
 
 ## Structure
-![Microservices Diagram](https://1drv.ms/u/s!AiPNPxTxFVuHeg62LPPdqj6BGHg?e=KlXYYp "Microservices Diagram")
+![Microservices Diagram](https://db3pap003files.storage.live.com/y4mhDHcCFlnCwd0MyHg0i0nkYlgDn3Tp69_QFmyKhdD29-G2pN43MxcBNkhUHhao9kK7U-NSjjlG6UOnrBoOw63CKe5sqEzN2KNnIlzZ1wCTipFJcU2lX2-tTbw2mAmaF7p7v2DkNhgdr5lAH66hXqWVHEFDviM-3OqEzVwk4SDL3i8Ptj72q_oSYakXu16jjHh?width=607&height=360&cropmode=none "Microservices Diagram")
 
 The structure of the application is designed to have one active GameMaster service at a time and one Authorization service. These are the only services in the application that communicate with the Database. The Authorization service uses the database in order to keep track of the registered users and and validate their login credentials. The GameMaster service uses the database to save the completed games as well the game results and the player scores.
 
