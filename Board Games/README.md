@@ -46,26 +46,26 @@ The only known hostnames in the network is the Database and the Zookeeper server
 
 ## How To Use
 For anyone curious, in this sub-section I provide some installation and execution information. Since I haven't uploaded the Service Images on the Docker hub, they have to be built manually.
-##### Build Docker Images (command line)
+#### Build Docker Images (command line)
 - Download Docker folder located in this repository
 - Inside the docker folder run: 
--- sudo docker build -t="user_interface" user_interface_service/.;
--- sudo docker build -t="authentication" authentication_service/.;
--- sudo docker build -t="game_master" game_master_service/.;
--- sudo docker build -t="play_master" play_master_service/.;
--- sudo docker build -t="database" database/.;
--- sudo docker build -t="zookeeper" zookeeper/.;
+  - sudo docker build -t="user_interface" user_interface_service/.;
+  - sudo docker build -t="authentication" authentication_service/.;
+  - sudo docker build -t="game_master" game_master_service/.;
+  - sudo docker build -t="play_master" play_master_service/.;
+  - sudo docker build -t="database" database/.;
+  - sudo docker build -t="zookeeper" zookeeper/.;
 
-##### Run The Services
+#### Run The Services
 - Create the following docker network by executing: 
--- sudo docker network create board_games_network
+  - sudo docker network create board_games_network
 - To start every service execute the following commands:
--- sudo docker run -ti --rm --network="board_games_network" --name="database" database;
--- sudo docker run -ti --rm --network="board_games_network" --name="zookeeper" zookeeper;
--- sudo docker run -ti --rm --network="board_games_network" -p 5000:5000 user_interface;
--- sudo docker run -ti --rm --network="board_games_network" authentication;
--- sudo docker run -ti --rm --network="board_games_network" game_master;
--- sudo docker run -ti --rm --network="board_games_network" play_master;
+  - sudo docker run -ti --rm --network="board_games_network" --name="database" database;
+  - sudo docker run -ti --rm --network="board_games_network" --name="zookeeper" zookeeper;
+  - sudo docker run -ti --rm --network="board_games_network" -p 5000:5000 user_interface;
+  - sudo docker run -ti --rm --network="board_games_network" authentication;
+  - sudo docker run -ti --rm --network="board_games_network" game_master;
+  - sudo docker run -ti --rm --network="board_games_network" play_master;
 - If you do not want the service to be deleted after it stops: remove --rm flag
 - If you want the service to run in the background: remove -ti flag
 - If you want to expose Zookeeper to a local port for inspection, add -p <localport>:2181
