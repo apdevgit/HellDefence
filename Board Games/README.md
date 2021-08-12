@@ -45,7 +45,7 @@ The only known hostnames in the network is the Database and the Zookeeper server
 ![Zookeeper node hierarchy](https://db3pap003files.storage.live.com/y4mBePSNObjO-2q2XprfEklY874cbgtD1bJPg9q2g8h3IPjZI9fgw5HX5ZPz2PM9YC0loFHBdB6zklheMteffti2TP8BordibaGOwsXOGvxse2jNd-Evld1xsOKbN9lyMiU1kvjNs4x-Zr8KlIyUQm1Mq0NQ0Ml8IOYsurUjpd33Uv7dfWxU5qjdtMhG05SJDnz?width=904&height=549&cropmode=none "Zookeeper node hierarchy")
 
 ## How To Use
-For anyone curious, in this sub-section I provide some installation and execution information. Since I haven't uploaded the Service Images on the Docker hub, they have to be built manually.
+To anyone interested, in this sub-section I provide some installation and execution information. Since I haven't uploaded the Service Images on the Docker hub, they have to be built manually.
 #### Build Docker Images (command line)
 - Download Docker folder located in this repository
 - Inside the docker folder run: 
