@@ -66,6 +66,7 @@ To anyone interested, in this sub-section I provide some installation and execut
   - sudo docker run -ti --rm --network="board_games_network" authentication;
   - sudo docker run -ti --rm --network="board_games_network" game_master;
   - sudo docker run -ti --rm --network="board_games_network" play_master;
+- To see the page, visit localhost:5000 in your browser.
 - If you do not want the service to be deleted after it stops: remove --rm flag
 - If you want the service to run in the background: remove -ti flag
 - If you want to expose Zookeeper to a local port for inspection, add -p <localport>:2181
