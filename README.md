@@ -1,4 +1,5 @@
 # HellDefence Unity3D Game (2017)
+![HellDefence](https://db3pap003files.storage.live.com/y4m3M6l49lSEOqRoRDc0Y0mknx__pF_vznEzza2siqJNQyCncQj1fNxXhw3b4oIfO0TNdROs-CKwjf9EevoIlJzCq4W28XiSTEfOfmCZe-OEbm9_COLtPNqYt4nskyKe5amMyoJlp1vY_ELma_UpI1PQMDYYkWAVAERAMJqlZCG_hDtKNZu7jUlv8wAA_PnPSGV?width=519&height=460&cropmode=none "HellDefence")
 HellDefence is an action game that I developed using Unity3D game-engine for my graduation thesis project, during my studies in the Technological Educational Institute of Crete, Department of Informatics Engineering. The purpose of the game is to defeat all the upcoming 'waves' of enemies. Each wave comes after the elimination of the previous one. The player can achieve that using four basic spells. Additionally, there are other special spells that the player can find on the 'buffstands' as well as stat boosts and full healing.
 
 The 3D models, sounds, images and textures were not created by me and their source is provided in the Asset Links file.
@@ -15,7 +16,6 @@ The 3D models, sounds, images and textures were not created by me and their sour
 This github repository contains only the project scripts that were developed in the unity3d project. You can download the whole project source from the onedrive link above. Inside the "Scripts" repository folder you can find a brief explanation of the utility of every script.
 
 # Other Details
-![HellDefence](https://db3pap003files.storage.live.com/y4m3M6l49lSEOqRoRDc0Y0mknx__pF_vznEzza2siqJNQyCncQj1fNxXhw3b4oIfO0TNdROs-CKwjf9EevoIlJzCq4W28XiSTEfOfmCZe-OEbm9_COLtPNqYt4nskyKe5amMyoJlp1vY_ELma_UpI1PQMDYYkWAVAERAMJqlZCG_hDtKNZu7jUlv8wAA_PnPSGV?width=519&height=460&cropmode=none "HellDefence")
 #### Enemy Models:
 - Skeleton
 - Spider
